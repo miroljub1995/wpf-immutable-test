@@ -81,6 +81,7 @@
     <Compile Include="Store\Actions.cs" />
     <Compile Include="Store\AppState.cs" />
     <Compile Include="Store\Reducer.cs" />
+    <Compile Include="ViewModels\AppStateVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,8 +122,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

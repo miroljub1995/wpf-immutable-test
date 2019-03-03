@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Redux;
 using WpfImmutableTest.Store;
+using WpfImmutableTest.ViewModels;
 
 namespace WpfImmutableTest
 {
@@ -28,12 +29,15 @@ namespace WpfImmutableTest
             new OtherState(0, "OtherInit",
                 ImmutableList<SomeListItem>.Empty.AddRange(new[]
                     {new SomeListItem(3, "Item string 1"), new SomeListItem(4, "Item string 2")}))));
+
+        private AppStateVM appState = new AppStateVM();
+
         public MainWindow()
         {
             var ctx = SynchronizationContext.Current;
             InitializeComponent();
-            _store.Subscribe(state => ctx.Post(_ => DataContext = state, null));
-
+            DataContext = appState;
+            _store.Subscribe(state => ctx.Post(_ => appState.UpdateFrom(state), null));
             RunTasks();
         }
 
