@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfImmutableTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfImmutableTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Row="0" Text="{Binding SomeNumber, Mode=OneTime}" />
+        <TextBox Grid.Row="1" Text="{Binding SomeString, Mode=OneTime}" />
+        <Grid Grid.Row="2" Margin="20,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Text="{Binding OtherState.SomeOtherNumber, Mode=OneTime}" />
+            <TextBox Grid.Row="1" Text="{Binding OtherState.SomeOtherString, Mode=OneTime}" />
+            <ListBox Grid.Row="2" ItemsSource="{Binding OtherState.SomeList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding ItemNumber, Mode=OneWay}" />
+                            <TextBox Text="{Binding ItemString, Mode=OneWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</Window>
