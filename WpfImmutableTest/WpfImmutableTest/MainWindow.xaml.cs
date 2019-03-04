@@ -37,13 +37,13 @@ namespace WpfImmutableTest
             var ctx = SynchronizationContext.Current;
             InitializeComponent();
             DataContext = appState;
-            //_store.Subscribe(state => ctx.Post(_ => appState.UpdateFrom(state), null));
             _store.Subscribe(appState.UpdateFrom);
             RunTasks();
         }
 
         private void RunTasks()
         {
+            var ctx = SynchronizationContext.Current;
             Task.Run(() =>
             {
                 for (int i = 0; i < 100000; i++)
@@ -56,8 +56,8 @@ namespace WpfImmutableTest
             {
                 for (int i = 0; i < 100000; i++)
                 {
-                    //_store.Dispatch(new IncrementSomeNumberInListItem());
-                    Thread.Sleep(100);
+                    _store.Dispatch(new IncrementSomeNumberInListItem());
+                    Thread.Sleep(200);
                 }
             });
         }

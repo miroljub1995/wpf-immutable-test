@@ -15,16 +15,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Text="{Binding SomeNumber, Mode=OneTime}" />
-        <TextBox Grid.Row="1" Text="{Binding SomeString, Mode=OneTime}" />
+        <TextBox Grid.Row="0" Text="{Binding SomeNumber, Mode=OneWay}" />
+        <TextBox Grid.Row="1" Text="{Binding SomeString, Mode=OneWay}" />
         <Grid Grid.Row="2" Margin="20,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" Text="{Binding OtherState.SomeOtherNumber, Mode=OneTime}" />
-            <TextBox Grid.Row="1" Text="{Binding OtherState.SomeOtherString, Mode=OneTime}" />
+            <TextBox Grid.Row="0" Text="{Binding OtherState.SomeOtherNumber, Mode=OneWay}" />
+            <TextBox Grid.Row="1" Text="{Binding OtherState.SomeOtherString, Mode=OneWay}" />
             <ListBox Grid.Row="2" ItemsSource="{Binding OtherState.SomeList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

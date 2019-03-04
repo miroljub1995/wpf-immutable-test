@@ -18,7 +18,7 @@ namespace WpfImmutableTest.ViewModels
 
         }
 
-        public OtherStateVM OtherState => (OtherStateVM)_otherState;
+        public new OtherStateVM OtherState => (OtherStateVM)_otherState;
 
         public void UpdateFrom(AppState state)
         {
@@ -43,21 +43,85 @@ namespace WpfImmutableTest.ViewModels
         }
     }
 
-    class OtherStateVM : OtherState
+    class OtherStateVM : OtherState, INotifyPropertyChanged
     {
-        private ObservableCollection<SomeListItem> _someObservableList = new ObservableCollection<SomeListItem>();
+        private ObservableCollection<SomeListItemVM> _someObservableList = new ObservableCollection<SomeListItemVM>();
         public OtherStateVM() : base(0, "", ImmutableList<SomeListItem>.Empty)
         {
 
         }
 
-        //public ObservableCollection<SomeListItem> SomeList => _someObservableList;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ObservableCollection<SomeListItemVM> SomeList => _someObservableList;
 
         public void UpdateFrom(OtherState state)
         {
-            _someOtherNumber = state.SomeOtherNumber;
-            _someOtherString = state.SomeOtherString;
-            _someList = state.SomeList;
+            if (_someOtherNumber != state.SomeOtherNumber)
+            {
+                _someOtherNumber = state.SomeOtherNumber;
+                OnPropertyChanged(nameof(SomeOtherNumber));
+            }
+            if (_someOtherString != state.SomeOtherString)
+            {
+                _someOtherString = state.SomeOtherString;
+                OnPropertyChanged(nameof(SomeOtherString));
+            }
+            if (_someList != state.SomeList)
+            {
+                _someList = state.SomeList;
+                UpdateObservableCollection(_someList);
+            }
+        }
+
+        private void UpdateObservableCollection(ImmutableList<SomeListItem> list)
+        {
+            while (list.Count < _someObservableList.Count)
+            {
+                _someObservableList.RemoveAt(_someObservableList.Count - 1);
+            }
+            while (list.Count > _someObservableList.Count)
+            {
+                _someObservableList.Add(new SomeListItemVM());
+            }
+            for (int i = 0; i < _someObservableList.Count; i++)
+            {
+                _someObservableList[i].UpdateFrom(list[i]);
+            }
+        }
+    }
+
+    class SomeListItemVM : SomeListItem, INotifyPropertyChanged
+    {
+        public SomeListItemVM() : base(0, "")
+        {
+
+        }
+
+        public void UpdateFrom(SomeListItem item)
+        {
+            if (_itemNumber != item.ItemNumber)
+            {
+                _itemNumber = item.ItemNumber;
+                OnPropertyChanged(nameof(ItemNumber));
+            }
+            if (_itemString != item.ItemString)
+            {
+                _itemString = item.ItemString;
+                OnPropertyChanged(nameof(ItemString));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
