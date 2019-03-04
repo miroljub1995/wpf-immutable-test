@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WpfImmutableTest.Store;
 
 namespace WpfImmutableTest.ViewModels
 {
-    class AppStateVM : AppState
+    class AppStateVM : AppState, INotifyPropertyChanged
     {
-        public AppStateVM() : base(0, "", new OtherStateVM())
+        public AppStateVM() : base(0, "AppStateVM init", new OtherStateVM())
         {
 
         }
@@ -20,9 +22,24 @@ namespace WpfImmutableTest.ViewModels
 
         public void UpdateFrom(AppState state)
         {
-            _someNumber = state.SomeNumber;
-            _someString = state.SomeString;
+            if (_someNumber != state.SomeNumber)
+            {
+                _someNumber = state.SomeNumber;
+                OnPropertyChanged(nameof(SomeNumber));
+            }
+            if (_someString != state.SomeString)
+            {
+                _someString = state.SomeString;
+                OnPropertyChanged(nameof(SomeString));
+            }
             OtherState.UpdateFrom(state.OtherState);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
