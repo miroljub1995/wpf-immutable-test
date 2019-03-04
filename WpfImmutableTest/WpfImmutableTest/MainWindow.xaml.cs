@@ -26,9 +26,7 @@ namespace WpfImmutableTest
     public partial class MainWindow : Window
     {
         private Store<AppState> _store = new Store<AppState>(Reducer.ReduceState, new AppState(0, "Init",
-            new OtherState(0, "OtherInit",
-                ImmutableList<SomeListItem>.Empty.AddRange(new[]
-                    {new SomeListItem(3, "Item string 1"), new SomeListItem(4, "Item string 2")}))));
+            new OtherState(0, "OtherInit", Enumerable.Range(0, 10000000).Select(e => new SomeListItem(e, $"Item num: {e}")).ToImmutableList())));
 
         private AppStateVM appState = new AppStateVM();
 

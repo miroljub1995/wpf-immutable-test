@@ -58,7 +58,7 @@ namespace WpfImmutableTest.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ObservableCollection<SomeListItemVM> SomeList => _someObservableList;
+        public new ObservableCollection<SomeListItemVM> SomeList => _someObservableList;
 
         public void UpdateFrom(OtherState state)
         {
@@ -89,10 +89,11 @@ namespace WpfImmutableTest.ViewModels
             {
                 _someObservableList.Add(new SomeListItemVM());
             }
-            for (int i = 0; i < _someObservableList.Count; i++)
-            {
-                _someObservableList[i].UpdateFrom(list[i]);
-            }
+            //for (int i = 0; i < _someObservableList.Count; i++)
+            //{
+            //    _someObservableList[i].UpdateFrom(list[i]);
+            //}
+            Parallel.For(0, _someObservableList.Count, (i) => _someObservableList[i].UpdateFrom(list[i]));
         }
     }
 
