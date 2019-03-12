@@ -18,14 +18,14 @@ namespace WpfImmutableTest.ViewModels
             if (!generatedTypes.ContainsKey(type))
             {
                 var mappings = GetTypesMappings();
-                var newType = CreateExtendedType(type, mappings);
+                var newType = CreateExtendedType(type, mappings[type], mappings);
 
                 generatedTypes[type] = newType;
             }
             return (T)Activator.CreateInstance(generatedTypes[type]);
         }
 
-        public static Type CreateExtendedType(Type type, Dictionary<Type, Type> mappings)
+        public static Type CreateExtendedType(Type type, Type extended, Dictionary<Type, Type> mappings)
         {
             if (!mappings.ContainsKey(type))
             {
@@ -43,7 +43,7 @@ namespace WpfImmutableTest.ViewModels
                 TypeAttributes.AnsiClass |
                 TypeAttributes.BeforeFieldInit |
                 TypeAttributes.AutoLayout,
-                null);
+                extended);
             ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
 
 
