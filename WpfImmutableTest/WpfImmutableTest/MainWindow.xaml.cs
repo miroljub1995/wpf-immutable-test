@@ -32,6 +32,7 @@ namespace WpfImmutableTest
             new OtherState(0, "OtherInit", Enumerable.Range(0, 10000).Select(e => new SomeListItem(e, $"Item num: {e}")).ToImmutableList())));
 
         private AppStateVM appState = new AppStateVM();
+        private AppStateVMEx appStateEx = (new AppStateVMEx()).Extend();
 
         [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
         public MainWindow()
@@ -71,7 +72,6 @@ namespace WpfImmutableTest
         {
             var assembly = new AssemblyName() { Name = "TestAssembly" };
             Type objectType = typeof(AppStateVM);
-
 
             AppDomain appDomain = AppDomain.CurrentDomain;
             AssemblyBuilder assemblyBuilder = appDomain.DefineDynamicAssembly(assembly, AssemblyBuilderAccess.Run);
