@@ -83,6 +83,8 @@
     <Compile Include="Store\AppState.cs" />
     <Compile Include="Store\Reducer.cs" />
     <Compile Include="ViewModels\AppStateVM.cs" />
+    <Compile Include="ViewModels\AppStateVMEx.cs" />
+    <Compile Include="ViewModels\TypeExtensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
