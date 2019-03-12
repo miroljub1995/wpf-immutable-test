@@ -11,7 +11,7 @@ using WpfImmutableTest.Store;
 
 namespace WpfImmutableTest.ViewModels
 {
-    class AppStateVM : AppState, INotifyPropertyChanged
+    public class AppStateVM : AppState, INotifyPropertyChanged
     {
         public AppStateVM() : base(0, "AppStateVM init", new OtherStateVM())
         {
@@ -43,7 +43,7 @@ namespace WpfImmutableTest.ViewModels
         }
     }
 
-    class OtherStateVM : OtherState, INotifyPropertyChanged
+    public class OtherStateVM : OtherState, INotifyPropertyChanged
     {
         private ObservableCollection<SomeListItemVM> _someObservableList = new ObservableCollection<SomeListItemVM>();
         public OtherStateVM() : base(0, "", ImmutableList<SomeListItem>.Empty)
@@ -97,7 +97,7 @@ namespace WpfImmutableTest.ViewModels
         }
     }
 
-    class SomeListItemVM : SomeListItem, INotifyPropertyChanged
+    public class SomeListItemVM : SomeListItem, INotifyPropertyChanged
     {
         public SomeListItemVM() : base(0, "")
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfImmutableTest.Store
 {
-    class AppState
+    public class AppState
     {
         protected int _someNumber;
         protected string _someString;
@@ -26,7 +26,7 @@ namespace WpfImmutableTest.Store
         public OtherState OtherState => _otherState;
     }
 
-    class OtherState
+    public class OtherState
     {
         protected int _someOtherNumber;
         protected string _someOtherString;
@@ -44,7 +44,7 @@ namespace WpfImmutableTest.Store
         public ImmutableList<SomeListItem> SomeList => _someList;
     }
 
-    class SomeListItem
+    public class SomeListItem
     {
         protected int _itemNumber;
         protected string _itemString;
