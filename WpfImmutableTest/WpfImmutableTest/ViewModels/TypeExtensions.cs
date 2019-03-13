@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -18,19 +19,21 @@ namespace WpfImmutableTest.ViewModels
             if (!generatedTypes.ContainsKey(type))
             {
                 var mappings = GetTypesMappings();
-                var newType = CreateExtendedType(type, mappings[type], mappings);
+                var newType = CreateExtendedType(type, mappings);
 
                 generatedTypes[type] = newType;
             }
             return (T)Activator.CreateInstance(generatedTypes[type]);
         }
 
-        public static Type CreateExtendedType(Type type, Type extended, Dictionary<Type, Type> mappings)
+        public static Type CreateExtendedType(Type type, Dictionary<Type, Type> mappings)
         {
             if (!mappings.ContainsKey(type))
             {
-                return mappings[type];
+                return type;
             }
+
+            var exType = mappings[type];
 
             var typeName = type.Name + "_Extended";
             var an = new AssemblyName(typeName);
@@ -43,9 +46,22 @@ namespace WpfImmutableTest.ViewModels
                 TypeAttributes.AnsiClass |
                 TypeAttributes.BeforeFieldInit |
                 TypeAttributes.AutoLayout,
-                extended);
-            ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
+                type);
+            //ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
 
+            var props = exType.GetProperties().Where(p => p.CanRead).ToList();
+            foreach(var prop in props)
+            {
+                var propType = prop.PropertyType;
+                if(propType.IsGenericType && prop == typeof(ImmutableList<>))
+                {
+                    //create observable list field and name it line propType
+                }
+                else
+                {
+                    var newType = CreateExtendedType(propType, mappings);
+                }
+            }
 
             Type objectType = tb.CreateType();
             return objectType;
