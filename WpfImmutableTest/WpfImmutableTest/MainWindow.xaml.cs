@@ -32,7 +32,7 @@ namespace WpfImmutableTest
             new OtherState(0, "OtherInit", Enumerable.Range(0, 10000).Select(e => new SomeListItem(e, $"Item num: {e}")).ToImmutableList())));
 
         private AppStateVM appState = new AppStateVM();
-        private AppStateVMEx appStateEx = (new AppStateVMEx()).Extend();
+        private AppStateVMEx appStateEx = TypeExtensions.CreateMutabale<AppStateVMEx>();
 
         [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
         public MainWindow()

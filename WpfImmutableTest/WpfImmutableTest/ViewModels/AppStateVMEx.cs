@@ -8,20 +8,20 @@ using WpfImmutableTest.Store;
 namespace WpfImmutableTest.ViewModels
 {
     [ExtendFromImmutable(typeof(AppState))]
-    public class AppStateVMEx
+    public abstract class AppStateVMEx : IUpdateFrom<AppState>
     {
-
+        public abstract void UpdateFrom(AppState source);
     }
 
     [ExtendFromImmutable(typeof(OtherState))]
-    public class OtherStateVMEx
+    public abstract class OtherStateVMEx : IUpdateFrom<OtherState>
     {
-        
+        public abstract void UpdateFrom(OtherState source);
     }
 
     [ExtendFromImmutable(typeof(SomeListItem))]
-    public class SomeListItemVMEx
+    public abstract class SomeListItemVMEx : IUpdateFrom<SomeListItem>
     {
-        
+        public abstract void UpdateFrom(SomeListItem source);
     }
 }
